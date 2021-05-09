@@ -7,8 +7,6 @@ pygame.init()
 """Plan is for the sudoku board to be 500x500 with 200 pixels below for instructions & time """
 # Create the screen
 WIDTH, HEIGHT = 500, 500
-screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
-pygame.display.set_caption("Sudoku")
 WHITE = (255,255,255)
 cube_side = 500/9
 
@@ -185,6 +183,8 @@ def format_time(secs):
 def main():
     run = True
     key = None
+    screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
+    pygame.display.set_caption("Sudoku")
     start = time.time()
     board = Grid(9, 9, WIDTH, HEIGHT)
 
