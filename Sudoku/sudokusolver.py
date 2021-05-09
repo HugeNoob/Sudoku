@@ -1,26 +1,27 @@
-#solves the board
+# Solves the board
 def solve(bo):
-    #break because this is recursive
+    # Break condition for recursion
     if find(bo):
         row, col = find(bo)
-        print(row, col)
     else:
+        #print for debugging
+        #print(bo)
         return True
 
-
-    #from 1 to 9, try to fit a number and call solve again on the updated board
+    # From 1 to 9, try to fit a number and call solve again on the updated board
     for i in range(1, 10):
         if validity(bo, row, col, i):
             bo[row][col] = i
-            print(bo)
 
+            # If num is valid, continue on valid board, until path ends
             if solve(bo):
                 return True
 
+            # If path ends, backtrack to previous working path
             bo[row][col] = 0
     
+    # Returns false is no valid number, allows for backtracking
     return False
-
 
 def check_row(bo, col, num):
     for i in range(9):
@@ -41,36 +42,25 @@ def check_box(bo, row, col, num):
                 return False
     return True
 
-#checks all criterias
+# Checks all criterias
 def validity(bo, row, col, num):
     box_row = row - row % 3
     box_col = col - col % 3
     return check_row(bo, col, num) and check_col(bo, row, num) and check_box(bo, box_row, box_col, num)
 
-#finds an empty square in the board
+# Finds an empty square in the board
 def find(bo):
-    #returns an x,y coord if 0 is found on board
+    # Returns an x,y coord if 0 is found on board
     for i in range(9):
         for j in range(9):
             if bo[i][j] == 0:
                 return i, j
 
-    #returns false if board is filled
-    return False
-
+    # Returns false if board is filled
+    return None
 
 def sudoku(bo):
     if solve(bo):
-        print(bo)
+        print(board)
     else:
         print("This board is invalid and unsolvable.")
-
-board = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
-        [5, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 8, 7, 0, 0, 0, 0, 3, 1],
-        [0, 0, 3, 0, 1, 0, 0, 8, 0],
-        [9, 0, 0, 8, 6, 3, 0, 0, 5],
-        [0, 5, 0, 0, 9, 0, 6, 0, 0],
-        [1, 3, 0, 0, 0, 0, 2, 5, 0],
-        [0, 0, 0, 0, 0, 0, 0, 7, 4],
-        [0, 0, 5, 2, 0, 6, 3, 0, 0]]
