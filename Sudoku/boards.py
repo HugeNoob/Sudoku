@@ -49,6 +49,7 @@ def generate_full(board):
                     
     return board
 
+# Checks if current board has more than 1 solution
 def solve_for_more(board, row, col):
     valid_vals = []
     solutions = 0
@@ -96,7 +97,7 @@ def generate_sudoku(board):
             board[row][col] = 0
             coords.remove(curr_coord)
 
-test_board = [[7, 4, 6, 9, 5, 8, 1, 2, 3], [8, 9, 2, 3, 1, 6, 7, 4, 5], [5, 3, 1, 7, 2, 4, 9, 8, 6], [9, 2, 5, 6, 7, 3, 8, 1, 4], [6, 8, 7, 1, 4, 9, 3, 5, 2], [4, 1, 3, 2, 8, 5, 6, 9, 7], [3, 6, 8, 4, 9, 2, 5, 7, 1], [1, 5, 4, 8, 3, 7, 2, 6, 9], [2, 7, 9, 5, 6, 1, 4, 3, 8]]
+#test_board = [[7, 4, 6, 9, 5, 8, 1, 2, 3], [8, 9, 2, 3, 1, 6, 7, 4, 5], [5, 3, 1, 7, 2, 4, 9, 8, 6], [9, 2, 5, 6, 7, 3, 8, 1, 4], [6, 8, 7, 1, 4, 9, 3, 5, 2], [4, 1, 3, 2, 8, 5, 6, 9, 7], [3, 6, 8, 4, 9, 2, 5, 7, 1], [1, 5, 4, 8, 3, 7, 2, 6, 9], [2, 7, 9, 5, 6, 1, 4, 3, 8]]
 
-print(generate_sudoku(test_board))
+#print(generate_sudoku(test_board))
 #print(efficient_generate_full(board))

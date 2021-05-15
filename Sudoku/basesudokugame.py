@@ -1,10 +1,15 @@
 import pygame, time
 from sudokusolver import solve, validity, find
 
+'''
+Instructions for player:
+Temporary numbers will appear gray. You can have multiple of these
+To key in a number, ensure that the box only contains one temporary number before pressing the "ENTER" key to lock in the number.
+Press backspace to delete temporary numbers.
+'''
 # Initialise pygame
 pygame.init()
 
-"""Plan is for the sudoku board to be 500x500 with 200 pixels below for instructions & time """
 # Create the screen
 WIDTH, HEIGHT = 500, 500
 WHITE = (255,255,255)
@@ -122,7 +127,7 @@ class Cube:
 
     def __init__(self, value, row, col, width, height):
         self.value = value
-        self.temp = 0
+        self.temp = []
         self.row = row
         self.col = col
         self.width = width
@@ -131,16 +136,40 @@ class Cube:
 
     # Draws boxes and numbers
     def draw(self, screen):
-        font = pygame.font.SysFont("comicsans", 40)
+        font = pygame.font.SysFont("comicsans", 50)
+        small_font = pygame.font.SysFont("comicsans", 25)
         
         # Row is actually the y coord while col is the x coord
         x = self.col * cube_side
         y = self.row * cube_side
 
         # Temp nums
-        if self.temp != 0 and self.value == 0:
-            txt = font.render(str(self.temp), True, (169,169,169))
-            screen.blit(txt, (x+5, y+5))
+        if len(self.temp) != 0 and self.value == 0:
+            x1, x2, x3 = x+4, x+22.5, x+41
+            y1, y2, y3 = y+4, y+21, y+37
+            for val in self.temp:
+                txt = small_font.render(str(val), True, (169,169,169))
+                if val == 1:
+                    screen.blit(txt, (x1, y1))
+                if val == 2:
+                    screen.blit(txt, (x2, y1))
+                if val == 3:
+                    screen.blit(txt, (x3, y1))
+
+                if val == 4:
+                    screen.blit(txt, (x1, y2))
+                if val == 5:
+                    screen.blit(txt, (x2, y2))
+                if val == 6:
+                    screen.blit(txt, (x3, y2))
+
+                if val == 7:
+                    screen.blit(txt, (x1, y3))
+                if val == 8:
+                    screen.blit(txt, (x2, y3))
+                if val == 9:
+                    screen.blit(txt, (x3, y3))
+
         # Confirmed nums
         elif self.value != 0:
             txt = font.render(str(self.value), True, (0,0,0))
@@ -156,7 +185,10 @@ class Cube:
 
     def set_temp(self, val):
         # Sets temp value
-        self.temp = val
+        if val not in self.temp and val != 0:
+            self.temp.append(val)
+        elif val == 0:
+            self.temp = []
 
 
 # Other functions
@@ -214,13 +246,14 @@ def main():
                     key = 8
                 if event.key == pygame.K_9:
                     key = 9
-                if event.key == pygame.K_DELETE:
+                if event.key == pygame.K_BACKSPACE:
                     board.clear()
                     key = None
                 if event.key == pygame.K_RETURN:
                     i, j = board.selected
-                    if board.cubes[i][j].temp != 0:
-                        if board.place(board.cubes[i][j].temp):
+                    if len(board.cubes[i][j].temp) == 1:
+                        val = board.cubes[i][j].temp[0]
+                        if board.place(val):
                             print("Success")
                         else:
                             print("Wrong")
