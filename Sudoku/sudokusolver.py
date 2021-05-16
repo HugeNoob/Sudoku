@@ -61,6 +61,6 @@ def find(bo):
 
 def sudoku(bo):
     if solve(bo):
-        print(board)
+        print(bo)
     else:
         print("This board is invalid and unsolvable.")
