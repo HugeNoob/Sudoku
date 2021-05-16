@@ -116,6 +116,9 @@ class Grid:
         return True
 
     def solve_gui(self):
+        # This line is just so the code doesn't hang
+        pygame.event.get()
+
         self.update_model()
         if find(self.model):
             row, col = find(self.model)
@@ -199,6 +202,7 @@ class Cube:
         if self.selected:
             pygame.draw.rect(screen, (RED), (x,y, cube_side, cube_side), 3)
 
+    # Illustrates the solver process
     def draw_changes(self, screen, resolved):
         font = pygame.font.SysFont("comicsans", 50)
 
