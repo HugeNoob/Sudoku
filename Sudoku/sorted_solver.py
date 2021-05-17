@@ -1,7 +1,6 @@
 from sudokusolver import validity
 import time
-board = [[0, 0, 0, 0, 5, 8, 0, 0, 0], [8, 0, 0, 0, 1, 0, 0, 4, 5], [0, 0, 0, 0, 0, 0, 9, 0, 6], [0, 2, 5, 0, 0, 3, 8, 0, 4], [6, 0, 0, 0, 4, 0, 0, 0, 0], [0, 0, 3, 2, 0, 5, 6, 0, 0], [0, 0, 8, 4, 0, 0, 0, 0, 0], [0, 5, 0, 8, 3, 7, 2, 6, 0], [2, 0, 0, 0, 6, 0, 4, 3, 0]]
-
+board = [[7, 0, 6, 0, 5, 8, 1, 0, 3], [8, 9, 0, 3, 0, 0, 0, 4, 5], [5, 3, 0, 7, 2, 4, 0, 8, 6], [0, 0, 5, 6, 7, 0, 8, 0, 4], [6, 0, 0, 0, 4, 9, 0, 5, 2], [0, 0, 0, 2, 0, 0, 6, 0, 0], [0, 0, 0, 4, 9, 0, 0, 0, 1], [1, 0, 0, 8, 0, 7, 0, 6, 0], [2, 7, 0, 5, 6, 0, 0, 0, 8]]
 
 def sort(board):
     sorted_dict = {8:[], 7:[], 6:[], 5:[], 4:[], 3:[], 2:[], 1:[]}
@@ -47,7 +46,6 @@ def sorted_find(sorted_dict):
         # Deletes empty keys
         if len(sorted_dict[i]) != 0:
             return sorted_dict[i][0]
-            
     return False
 
 def sorted_solve(board, sorted_dict):
@@ -75,10 +73,5 @@ def sorted_solve(board, sorted_dict):
 
             board[row][col] = 0
             sorted_dict[first_key].insert(0, (row,col))
-    
-    return False
 
-start = time.time()
-sorted_solve(board, sort(board))
-end = time.time()
-print(end-start)
+    return False
