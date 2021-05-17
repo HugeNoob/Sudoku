@@ -32,21 +32,18 @@ def generate_full(board):
         # Finds random coord
         coords_index = random.randint(0, len(coords) - 1)
         row, col = curr_coord = coords[coords_index]
-        filled = 0
-
+        
         # Fills coord with valid num
-        while not filled:
-            temp_board = copy.deepcopy(board)
-            for val in range(1,10):
+        temp_board = copy.deepcopy(board)
+        for val in range(1,10):
 
-                if validity(temp_board, row, col, val):
-                    temp_board[row][col] = val
-                    
-                    if solve(temp_board):
-                        board[row][col] = val
-                        filled = 1
-                        break
-            coords.remove(curr_coord)
+            if validity(temp_board, row, col, val):
+                temp_board[row][col] = val
+                
+                if solve(temp_board):
+                    board[row][col] = val
+                    break
+        coords.remove(curr_coord)
             
     return board
 
