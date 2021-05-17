@@ -79,7 +79,7 @@ def generate_sudoku(board):
     coords = mapping(9,9)
     
     # 65 is honestly an arbitrary number to increase efficiency
-    for i in range(65):
+    for i in range(60):
 
         # Finds random coord
         coords_index = random.randint(0, len(coords) - 1)
