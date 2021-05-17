@@ -36,9 +36,13 @@ def check_col(bo, row, num):
     return True
 
 def check_box(bo, row, col, num):
-    for i in range(3):
-        for j in range(3):
-            if bo[row+i][col+j] == num:
+    # Check box
+    box_x = col // 3
+    box_y = row // 3
+
+    for i in range(box_y*3, box_y*3 + 3):
+        for j in range(box_x*3, box_x*3 + 3):
+            if bo[i][j] == num and (i,j) != (row,col):
                 return False
     return True
 
