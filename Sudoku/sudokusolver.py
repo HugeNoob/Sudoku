@@ -56,9 +56,3 @@ def find(bo):
 
     # Returns false if board is filled
     return None
-
-def sudoku(bo):
-    if solve(bo):
-        print(bo)
-    else:
-        print("This board is invalid and unsolvable.")
