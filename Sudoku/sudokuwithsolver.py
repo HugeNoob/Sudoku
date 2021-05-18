@@ -1,11 +1,9 @@
-import pygame, time
+from boardgenerator import generate_full, generate_sudoku, board_template
+import pygame, copy, time
 from sudokusolver import solve, validity, find
 
 '''
-Instructions for player:
-Temporary numbers will appear gray. You can have multiple of these
-To key in a number, ensure that the box only contains one temporary number before pressing the "ENTER" key to lock in the number.
-Press backspace to delete temporary numbers.
+This is the version with more functionalities and a board generator.
 '''
 # Initialise pygame
 pygame.init()
@@ -19,17 +17,9 @@ GREEN = (0,255,0)
 cube_side = 500/9
 
 class Grid:
-    board = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
-        [5, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 8, 7, 0, 0, 0, 0, 3, 1],
-        [0, 0, 3, 0, 1, 0, 0, 8, 0],
-        [9, 0, 0, 8, 6, 3, 0, 0, 5],
-        [0, 5, 0, 0, 9, 0, 6, 0, 0],
-        [1, 3, 0, 0, 0, 0, 2, 5, 0],
-        [0, 0, 0, 0, 0, 0, 0, 7, 4],
-        [0, 0, 5, 2, 0, 6, 3, 0, 0]]
 
-    def __init__(self, rows, cols, width, height, screen):
+    def __init__(self, board, rows, cols, width, height, screen):
+        self.board = board
         self.rows = rows
         self.cols = cols
         self.cubes = [[Cube(self.board[i][j], i, j, width, height) for j in range(cols)] for i in range(rows)]
@@ -248,15 +238,19 @@ class Cube:
 def redraw_window(screen, board, time):
     screen.fill(WHITE)
     font = pygame.font.SysFont("comicsans", 40)
+    small_font = pygame.font.SysFont("comicsans", 20)
     # Draw board
     board.draw_board(screen)
     # Draw time
-    txt = font.render("Time: " + format_time(time), True, (0,0,0))
-    screen.blit(txt, (310, 540))
+    txt = font.render("Time: " + format_time(time), True, BLACK)
+    screen.blit(txt, (30, 540))
+    # Draw esc message
+    esc_txt = small_font.render("Press ESC to exit", True, BLACK)
+    screen.blit(esc_txt, (380, 580))
 
 def format_time(secs):
     sec = secs%60
-    minute = sec//60
+    minute = secs//60
     hour = minute//60
 
     if len(str(sec)) == 1:
@@ -265,17 +259,151 @@ def format_time(secs):
     time = str(hour) + ":" + str(minute) + ":" + str(sec)
     return time
 
-def main():
+# Difficulty settings
+EASY = 45
+MEDIUM = 55
+HARD = 65
+
+def draw_text(text, font, colour, screen, x, y):
+    txt = font.render(text, True, colour)
+    screen.blit(txt, (x, y))
+
+# Main menu
+def main_menu():
+    run = True
+    click = False
+    pygame.display.set_caption("Sudoku Main Menu")
+    screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
+    screen.fill(WHITE)
+    font = pygame.font.SysFont("comicsans", 40)
+    pygame.display.update()
+
+    while run:
+        draw_text('main menu', font, BLACK, screen, 20, 20)
+        
+        mx, my = pygame.mouse.get_pos()
+
+        # Forming buttons
+        easy_button = pygame.Rect(150, 155, 200, 50)
+        med_button = pygame.Rect(150, 225, 200, 50)
+        hard_button = pygame.Rect(150, 295, 200, 50)
+        instructions_button = pygame.Rect(150, 365, 200, 50)
+
+        # Drawing buttons
+        pygame.draw.rect(screen, BLACK, easy_button, width=3, border_radius=10)
+        pygame.draw.rect(screen, BLACK, med_button, width=3, border_radius=10)
+        pygame.draw.rect(screen, BLACK, hard_button, width=3, border_radius=10)
+        pygame.draw.rect(screen, BLACK, instructions_button, width=3, border_radius=10)
+        
+
+        # Filling buttons
+        txt = font.render('easy', True, BLACK)
+        screen.blit(txt, ((250-txt.get_width()/2), (180-txt.get_height()/2)))
+
+        txt = font.render('medium', True, BLACK)
+        screen.blit(txt, ((250-txt.get_width()/2), (250-txt.get_height()/2)))
+
+        txt = font.render('hard', True, BLACK)
+        screen.blit(txt, ((250-txt.get_width()/2), (320-txt.get_height()/2)))
+        
+        txt = font.render('instructions', True, BLACK)
+        screen.blit(txt, ((250-txt.get_width()/2), (390-txt.get_height()/2)))
+
+        # Clicking buttons
+        if easy_button.collidepoint((mx,my)):
+            if click:
+                game(EASY)
+                screen.fill(WHITE)
+                pygame.display.update()
+        if med_button.collidepoint((mx,my)):
+            if click:
+                game(MEDIUM)
+                screen.fill(WHITE)
+                pygame.display.update()
+        if hard_button.collidepoint((mx,my)):
+            if click:
+                game(HARD)
+                screen.fill(WHITE)
+                pygame.display.update()
+        if instructions_button.collidepoint((mx,my)):
+            if click:
+                instructions()
+                screen.fill(WHITE)
+                pygame.display.update()
+        click = False
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+        
+        pygame.display.update()
+
+# Instructions page
+def instructions():
+    run = True
+    pygame.display.set_caption("Sudoku Instructions")
+    screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
+    screen.fill(WHITE)
+    title_font = pygame.font.SysFont("comicsans", 40)
+    body_font = pygame.font.SysFont("comicsans", 30)
+    small_font = pygame.font.SysFont("comicsans",20)
+    pygame.display.update()
+
+    while run:
+        # Title
+        draw_text('Instructions', title_font, BLACK, screen, 20, 20)
+
+        # Body
+        draw_text('1. Temporary numbers will appear gray.', body_font, BLACK, screen, 20, 70)
+        draw_text('2. To key in a number, ensure that the box only', body_font, BLACK, screen, 20, 100)
+        draw_text('contains one temporary number before pressing', body_font, BLACK, screen, 20, 130)
+        draw_text('ENTER.', body_font, BLACK, screen, 20, 160)       
+        draw_text('3. Press BACKSPACE to delete temporary', body_font, BLACK, screen, 20, 190)       
+        draw_text('numbers.', body_font, BLACK, screen, 20, 220) 
+        draw_text('4. Press SPACE to solve board.', body_font, BLACK, screen, 20, 250) 
+        draw_text('5. Loading MEDIUM or HARD may take a while.', body_font, BLACK, screen, 20, 280)
+
+        # Small text
+        draw_text('Press ESC to exit', small_font, BLACK, screen, 380, 580)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+        
+        pygame.display.update()
+
+# Running the game
+def game(difficulty):
     run = True
     key = None
     screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
-    pygame.display.set_caption("Sudoku")
+    pygame.display.set_caption("Sudoku Game")
+
+    # Loading screen
+    screen.fill(WHITE)
+    font = pygame.font.SysFont("comicsans", 30)
+    txt = font.render("Loading... This may take a while for HARD.", True, BLACK)
+    screen.blit(txt, (30, 560))
+    pygame.display.update()
+
+    '''Deep copy of template is to ensure game does not hang when difficulty modes are reloaded multiple times. 
+    Hanging is due to passing a non-filled board_template into generate_sudoku, due to previous iterations, hence resulting in unintended difficulty levels.'''
+    board_template_template = copy.deepcopy(board_template)
+    sudoku_board = generate_sudoku(generate_full(board_template_template), difficulty)
+    board = Grid(sudoku_board, 9, 9, WIDTH, HEIGHT, screen)
     start = time.time()
-    board = solving_board = Grid(9, 9, WIDTH, HEIGHT, screen)
+    
 
     while run:
-
         play_time = round(time.time() - start)
+        redraw_window(screen, board, play_time)
+        pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -302,20 +430,24 @@ def main():
                 if event.key == pygame.K_BACKSPACE:
                     board.clear()
                     key = None
+                if event.key == pygame.K_ESCAPE:
+                    run = False
                 if event.key == pygame.K_RETURN:
-                    i, j = board.selected
-                    if len(board.cubes[i][j].temp) == 1:
-                        val = board.cubes[i][j].temp[0]
-                        if board.place(val):
-                            print("Success")
-                        else:
-                            print("Wrong")
+                    if board.selected == None:
                         key = None
+                    else:
+                        i, j = board.selected
+                        if len(board.cubes[i][j].temp) == 1:
+                            val = board.cubes[i][j].temp[0]
+                            if board.place(val):
+                                print("Success")
+                            else:
+                                print("Wrong")
+                            key = None
 
-                        if board.isFinished():
-                            print("Game Over")
-                            run = False
-                            
+                            if board.isFinished():
+                                print("Game Over")
+                                run = False
                 if event.key == pygame.K_SPACE:
                     board.solve_gui()
 
@@ -329,9 +461,6 @@ def main():
         if board.selected and key != None:
             board.temp_place(key)
 
-        redraw_window(screen, board, play_time)
-        pygame.display.update()
-
 if __name__ == "__main__":
-    main()
+    main_menu()
     pygame.quit()
