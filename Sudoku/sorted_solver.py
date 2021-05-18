@@ -1,9 +1,8 @@
 from sudokusolver import validity
-import time
-board = [[7, 0, 6, 0, 5, 8, 1, 0, 3], [8, 9, 0, 3, 0, 0, 0, 4, 5], [5, 3, 0, 7, 2, 4, 0, 8, 6], [0, 0, 5, 6, 7, 0, 8, 0, 4], [6, 0, 0, 0, 4, 9, 0, 5, 2], [0, 0, 0, 2, 0, 0, 6, 0, 0], [0, 0, 0, 4, 9, 0, 0, 0, 1], [1, 0, 0, 8, 0, 7, 0, 6, 0], [2, 7, 0, 5, 6, 0, 0, 0, 8]]
 
+# Returns a sorted dict
 def sort(board):
-    sorted_dict = {8:[], 7:[], 6:[], 5:[], 4:[], 3:[], 2:[], 1:[]}
+    sorted_dict = {9:[], 8:[], 7:[], 6:[], 5:[], 4:[], 3:[], 2:[], 1:[], 0:[]}
     empty_coords = []
 
     # Finds all empty coords
@@ -48,12 +47,14 @@ def sorted_find(sorted_dict):
             return sorted_dict[i][0]
     return False
 
+# Solves board recursively
 def sorted_solve(board, sorted_dict):
     # Finds a coord from sorted dict
     if sorted_find(sorted_dict):
         row, col = sorted_find(sorted_dict)
     else:
-        print(board)
+        #for debugging
+        #print(board)
         return True
 
     for i in range(1,10):
