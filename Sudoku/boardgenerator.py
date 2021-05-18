@@ -3,7 +3,7 @@ from sorted_solver import sort, sorted_solve
 import random, copy, time
 
 # Complete board template
-board = [[7, 4, 6, 9, 5, 8, 1, 2, 3], [8, 9, 2, 3, 1, 6, 7, 4, 5], [5, 3, 1, 7, 2, 4, 9, 8, 6], [9, 2, 5, 6, 7, 3, 8, 1, 4], [6, 8, 7, 1, 4, 9, 3, 5, 2], [4, 1, 3, 2, 8, 5, 6, 9, 7], [3, 6, 8, 4, 9, 2, 5, 7, 1], [1, 5, 4, 8, 3, 7, 2, 6, 9], [2, 7, 9, 5, 6, 1, 4, 3, 8]]
+board_template = [[7, 4, 6, 9, 5, 8, 1, 2, 3], [8, 9, 2, 3, 1, 6, 7, 4, 5], [5, 3, 1, 7, 2, 4, 9, 8, 6], [9, 2, 5, 6, 7, 3, 8, 1, 4], [6, 8, 7, 1, 4, 9, 3, 5, 2], [4, 1, 3, 2, 8, 5, 6, 9, 7], [3, 6, 8, 4, 9, 2, 5, 7, 1], [1, 5, 4, 8, 3, 7, 2, 6, 9], [2, 7, 9, 5, 6, 1, 4, 3, 8]]
 
 # Maps each coord on the board
 def mapping(rows, cols):
@@ -34,7 +34,7 @@ def row_shuffle(board):
     # Bottom
     i, j = random.randint(6,8), random.randint(6,8)
     swap(board, i, j)
-    
+
     return board
 
 # Shuffles board template to generate new board
@@ -72,12 +72,12 @@ def solve_for_more(board, row, col):
     return solutions
 
 # Generates sudoku board with 0s from a valid full board
-def generate_sudoku(board):
+def generate_sudoku(board, difficulty):
     # Generates map coords
     coords = mapping(9,9)
     
     # 65 is honestly an arbitrary number to increase efficiency
-    for i in range(65):
+    for i in range(difficulty):
 
         # Finds random coord
         coords_index = random.randint(0, len(coords) - 1)
