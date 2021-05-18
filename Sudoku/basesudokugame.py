@@ -2,10 +2,7 @@ import pygame, time
 from sudokusolver import solve, validity, find
 
 '''
-Instructions for player:
-Temporary numbers will appear gray. You can have multiple of these
-To key in a number, ensure that the box only contains one temporary number before pressing the "ENTER" key to lock in the number.
-Press backspace to delete temporary numbers.
+This is the very basic version without many functionalities and has a static board.
 '''
 # Initialise pygame
 pygame.init()
@@ -35,8 +32,8 @@ class Grid:
         self.model = self.board
         self.selected = None
     
+    # Model is temp board that is sent for analysis, not actual board. Set model as actual board when confirmed valid.
     def update_model(self):
-        # Model is temp board that is sent for analysis, not actual board. set this as actual board when confirmed valid.
         self.model = [[self.cubes[i][j].value for j in range(self.cols)] for i in range(self.rows)]
     
     def draw_board(self, screen):
@@ -61,8 +58,8 @@ class Grid:
             for j in range(self.cols):
                 self.cubes[i][j].draw(screen)
 
+    # Sets actual value when confirmed
     def place(self, val):
-        # Sets actual value when confirmed
         row, col = self.selected
         if self.cubes[row][col].value == 0:
 
@@ -79,12 +76,13 @@ class Grid:
                     self.update_model()
                     return False
 
+    # Sets a temporary value
     def temp_place(self, val):
         row, col = self.selected
         self.cubes[row][col].set_temp(val)
 
+    # Selects square that is clicked
     def select(self, row, col):
-        # Selects square that is clicked
         for i in range(self.rows):
             for j in range(self.cols):
                 self.cubes[i][j].selected = False
@@ -92,18 +90,14 @@ class Grid:
         self.cubes[row][col].selected = True
         self.selected = (row, col)
 
+    # Clears currently selected cube
     def clear(self):
-        # Clears currently selected cube
         row, col = self.selected
         if self.cubes[row][col].value == 0:
             self.cubes[row][col].set_temp(0)
 
+    # Returns pos of cube clicked on
     def click(self, pos):
-        """get_pos() -> (x, y)
-            param: pos(x, y)
-            output: (x, y)
-        """
-        # Returns pos of cube clicked on
         if pos[0] < self.width and pos[1] < self.height:
             x = pos[0] // cube_side
             y = pos[1] // cube_side
@@ -111,8 +105,8 @@ class Grid:
         else:
             return None
 
+    # Checks if board is complete
     def isFinished(self):
-        # Checks if there are empty squares on board
         for i in range(self.rows):
             for j in range(self.cols):
                 if self.cubes[i][j].value == 0:
@@ -139,7 +133,7 @@ class Cube:
         font = pygame.font.SysFont("comicsans", 50)
         small_font = pygame.font.SysFont("comicsans", 25)
         
-        # Row is actually the y coord while col is the x coord
+        # Row is the y coord while col is the x coord
         x = self.col * cube_side
         y = self.row * cube_side
 
@@ -179,12 +173,12 @@ class Cube:
         if self.selected:
             pygame.draw.rect(screen, (255,0,0), (x,y, cube_side, cube_side), 3)
 
+    # Sets locked value
     def set(self, val):
-        # Sets locked value
         self.value = val
 
+    # Sets temp value
     def set_temp(self, val):
-        # Sets temp value
         if val not in self.temp and val != 0:
             self.temp.append(val)
         elif val == 0:
@@ -250,18 +244,21 @@ def main():
                     board.clear()
                     key = None
                 if event.key == pygame.K_RETURN:
-                    i, j = board.selected
-                    if len(board.cubes[i][j].temp) == 1:
-                        val = board.cubes[i][j].temp[0]
-                        if board.place(val):
-                            print("Success")
-                        else:
-                            print("Wrong")
+                    if board.selected == None:
                         key = None
+                    else:
+                        i, j = board.selected
+                        if len(board.cubes[i][j].temp) == 1:
+                            val = board.cubes[i][j].temp[0]
+                            if board.place(val):
+                                print("Success")
+                            else:
+                                print("Wrong")
+                            key = None
 
-                        if board.isFinished():
-                            print("Game Over")
-                            run = False
+                            if board.isFinished():
+                                print("Game Over")
+                                run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
