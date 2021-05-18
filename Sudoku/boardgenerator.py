@@ -16,7 +16,7 @@ def mapping(rows, cols):
     # Returns 81 coords
     return coords
 
-# Generates a full valid sudoku board
+# Swaps two lists
 def swap(board, i, j):
     if i != j:
         board[i], board[j] = board[j], board[i]
@@ -75,8 +75,8 @@ def solve_for_more(board, row, col):
 def generate_sudoku(board, difficulty):
     # Generates map coords
     coords = mapping(9,9)
-    
-    # 65 is honestly an arbitrary number to increase efficiency
+
+    # 45 for easy, 55 for medium, 65 for hard
     for i in range(difficulty):
 
         # Finds random coord
