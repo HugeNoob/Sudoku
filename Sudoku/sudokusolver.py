@@ -4,8 +4,6 @@ def solve(bo):
     if find(bo):
         row, col = find(bo)
     else:
-        #print for debugging
-        #print(bo)
         return True
 
     # From 1 to 9, try to fit a number and call solve again on the updated board
