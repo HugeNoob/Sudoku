@@ -26,4 +26,6 @@ This file features a basic sudoku game with minimal functionalities like pencil 
 
 5. sudokuwithsolver.py  
 This file is the final sudoku game with more functionalities. It features a main menu with 3 levels of board difficulty, pencil marks, board generator, and a solver
-GUI.
+GUI.  
+  
+To start the game, simply download all files and run sudokuwithsolver.py. Enjoy.
