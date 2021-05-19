@@ -360,11 +360,12 @@ def instructions():
         draw_text('1. Temporary numbers will appear gray.', body_font, BLACK, screen, 20, 70)
         draw_text('2. To key in a number, ensure that the box only', body_font, BLACK, screen, 20, 100)
         draw_text('contains one temporary number before pressing', body_font, BLACK, screen, 20, 130)
-        draw_text('ENTER.', body_font, BLACK, screen, 20, 160)       
-        draw_text('3. Press BACKSPACE to delete temporary', body_font, BLACK, screen, 20, 190)       
-        draw_text('numbers.', body_font, BLACK, screen, 20, 220) 
-        draw_text('4. Press SPACE to solve board.', body_font, BLACK, screen, 20, 250) 
-        draw_text('5. Loading MEDIUM or HARD may take a while.', body_font, BLACK, screen, 20, 280)
+        draw_text('ENTER.', body_font, BLACK, screen, 20, 160)
+        draw_text('3. Only correct numbers are accepted.', body_font, BLACK, screen, 20, 190)
+        draw_text('3. Press BACKSPACE to delete temporary', body_font, BLACK, screen, 20, 220)       
+        draw_text('numbers.', body_font, BLACK, screen, 20, 250) 
+        draw_text('4. Press SPACE to solve board.', body_font, BLACK, screen, 20, 280) 
+        draw_text('5. Reload game if loading HARD takes too long.', body_font, BLACK, screen, 20, 310)
 
         # Small text
         draw_text('Press ESC to exit', small_font, BLACK, screen, 380, 580)
@@ -399,7 +400,6 @@ def game(difficulty):
     board = Grid(sudoku_board, 9, 9, WIDTH, HEIGHT, screen)
     start = time.time()
     
-
     while run:
         play_time = round(time.time() - start)
         redraw_window(screen, board, play_time)
