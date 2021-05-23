@@ -47,6 +47,8 @@ def sort(board):
 def sorted_find(sorted_dict):
     '''
     Returns the first coordinate in a dictionary.
+
+    Returns False if dictionary is empty.
     '''
     for i in list(sorted_dict):
 
