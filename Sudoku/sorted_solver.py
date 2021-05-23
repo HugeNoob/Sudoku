@@ -1,7 +1,13 @@
 from sudokusolver import validity
 
-# Returns a sorted dict
 def sort(board):
+    '''
+    Returns a sorted dictionary with keys 9 to 0 in decreasing order. 
+    
+    Each key contains a list of coordinates that has the corresponding amount of information.
+    
+    Information is defined as the number of unique numbers in the row, col, and 3x3 of a specific coordinate.
+    '''
     sorted_dict = {9:[], 8:[], 7:[], 6:[], 5:[], 4:[], 3:[], 2:[], 1:[], 0:[]}
     empty_coords = []
 
@@ -38,8 +44,10 @@ def sort(board):
     
     return sorted_dict
 
-# Finds the first coord in dict
 def sorted_find(sorted_dict):
+    '''
+    Returns the first coordinate in a dictionary.
+    '''
     for i in list(sorted_dict):
 
         # Deletes empty keys
@@ -47,14 +55,16 @@ def sorted_find(sorted_dict):
             return sorted_dict[i][0]
     return False
 
-# Solves board recursively
 def sorted_solve(board, sorted_dict):
+    '''
+    Solves the board recursively with a sorted dictionary.
+
+    Returns True if board is solvable, and False if unsolvable.
+    '''
     # Finds a coord from sorted dict
     if sorted_find(sorted_dict):
         row, col = sorted_find(sorted_dict)
     else:
-        #for debugging
-        #print(board)
         return True
 
     for i in range(1,10):
