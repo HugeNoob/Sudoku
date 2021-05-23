@@ -27,9 +27,7 @@ def solve(board):
 
 def check_row(board, col, num):
     '''
-    Checks row for same number.
-
-    Returns True or False accordingly.
+    Returns True if row contains same number, False otherwise.
     '''
     for i in range(9):
         if board[i][col] == num:
@@ -38,9 +36,7 @@ def check_row(board, col, num):
 
 def check_col(board, row, num):
     '''
-    Checks col for same number.
-
-    Returns True or False accordingly.
+    Returns True if column contains same number, False otherwise.
     '''
     for i in range(9):
         if board[row][i] == num:
@@ -49,9 +45,7 @@ def check_col(board, row, num):
 
 def check_box(board, row, col, num):
     '''
-    Checks 3x3 box for same number.
-
-    Returns True or False accordingly.
+    Returns True if 3x3 contains same number, False otherwise.
     '''
     for i in range(3):
         for j in range(3):
@@ -63,7 +57,7 @@ def validity(board, row, col, num):
     '''
     Using check_row, check_col, check_box, determine validity of number entered on a specific coordinate in a board.
 
-    Returns True or False accordingly.
+    Returns True if all true, False otherwise.
     '''
     box_row = row - row % 3
     box_col = col - col % 3
