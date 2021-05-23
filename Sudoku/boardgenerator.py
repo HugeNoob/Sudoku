@@ -14,7 +14,7 @@ def mapping(rows, cols):
         for col in range(cols):
             coord = (row, col)
             coords.append(coord)
-    range()
+
     # Returns 81 coords
     return coords
 
@@ -121,3 +121,4 @@ def generate_sudoku(board, difficulty):
             coords.remove(curr_coord)
 
     return board
+    
