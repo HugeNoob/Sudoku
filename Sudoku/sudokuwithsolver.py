@@ -17,12 +17,26 @@ GREEN = (0,255,0)
 cube_side = 500/9
 
 class Grid:
-
+    '''
+    A class to represent an entire sudoku board.
+    '''
     def __init__(self, board, rows, cols, width, height, screen):
+        '''
+        Parameters:
+        -----------
+        rows: int
+            Number of rows in the board.
+        cols: int
+            Number of columns in the board.
+        width: int
+            Width of the pygame window.
+        height: int
+            Height of the pygame window.
+        '''
         self.board = board
         self.rows = rows
         self.cols = cols
-        self.cubes = [[Cube(self.board[i][j], i, j, width, height) for j in range(cols)] for i in range(rows)]
+        self.cubes = [[Cube(self.board[i][j], i, j) for j in range(cols)] for i in range(rows)]
         self.width = width
         self.height = height
         self.model = self.board
@@ -30,10 +44,16 @@ class Grid:
         self.screen = screen
     
     def update_model(self):
+        '''
+        Makes a model board which is a deep copy of the main board.
+        '''
         # Model is temp board that is sent for analysis, not actual board. set this as actual board when confirmed valid.
         self.model = [[self.cubes[i][j].value for j in range(self.cols)] for i in range(self.rows)]
     
     def draw_board(self, screen):
+        '''
+        Draws in all lines and calls cube.draw to draw numbers.
+        '''
         # Draw bolder lines
         screen.fill(WHITE)
         pygame.draw.rect(screen, (BLACK), pygame.Rect(0, 0, WIDTH, HEIGHT), width = 10)
@@ -56,6 +76,9 @@ class Grid:
                 self.cubes[i][j].draw(screen)
 
     def place(self, val):
+        '''
+        Sets actual value if value is valid.
+        '''
         # Sets actual value when confirmed
         row, col = self.selected
         if self.cubes[row][col].value == 0:
@@ -74,10 +97,18 @@ class Grid:
                     return False
 
     def temp_place(self, val):
+        '''
+        Sets a temporary value.
+        '''
         row, col = self.selected
         self.cubes[row][col].set_temp(val)
 
     def select(self, row, col):
+        '''
+        Sets self.selected of all other cubes to False
+
+        Sets self.selected of selected cube to True.
+        '''
         # Selects square that is clicked
         for i in range(self.rows):
             for j in range(self.cols):
@@ -87,16 +118,18 @@ class Grid:
         self.selected = (row, col)
 
     def clear(self):
+        '''
+        Clears all temporary values in currently selected cube.
+        '''
         # Clears currently selected cube
         row, col = self.selected
         if self.cubes[row][col].value == 0:
             self.cubes[row][col].set_temp(0)
 
     def click(self, pos):
-        """get_pos() -> (x, y)
-            param: pos(x, y)
-            output: (x, y)
-        """
+        '''
+        Returns coordinates of cube clicked on.
+        '''
         # Returns pos of cube clicked on
         if pos[0] < self.width and pos[1] < self.height:
             x = pos[0] // cube_side
@@ -106,6 +139,9 @@ class Grid:
             return None
 
     def isFinished(self):
+        '''
+        Returns True if board is complete, false otherwise.
+        '''
         # Checks if there are empty squares on board
         for i in range(self.rows):
             for j in range(self.cols):
@@ -114,6 +150,9 @@ class Grid:
         return True
 
     def solve_gui(self):
+        '''
+        Solves the board and visualises the process with a GUI.
+        '''
         # This line is just so the code doesn't hang
         pygame.event.get()
 
@@ -139,24 +178,35 @@ class Grid:
                 pygame.display.update()
 
         return False
-
-
         
 class Cube:
+    '''
+    A class to represent individual squares on a sudoku board.
+    '''
     rows = 9
     cols = 9
 
-    def __init__(self, value, row, col, width, height):
+    def __init__(self, value, row, col):
+        '''
+        Parameters:
+        -----------
+        value: int
+            Correct and determined value of a square.
+        row: int
+            row that square is in.
+        col: int
+            column that square is in.
+        '''
         self.value = value
         self.temp = []
         self.row = row
         self.col = col
-        self.width = width
-        self.height = height
         self.selected = False
 
-    # Draws boxes and numbers
     def draw(self, screen):
+        '''
+        Draws numbers and red box if selected.
+        '''
         font = pygame.font.SysFont("comicsans", 50)
         small_font = pygame.font.SysFont("comicsans", 25)
         
@@ -200,8 +250,12 @@ class Cube:
         if self.selected:
             pygame.draw.rect(screen, (RED), (x,y, cube_side, cube_side), 3)
 
-    # Illustrates the solver process
     def draw_changes(self, screen, resolved):
+        '''
+        Illustrates the solver process.
+
+        Solved cubes are highlighted with a green box.
+        '''
         font = pygame.font.SysFont("comicsans", 50)
 
         x = self.col * cube_side
@@ -222,20 +276,25 @@ class Cube:
             pygame.draw.rect(screen, (RED), (x,y, cube_side, cube_side), 3)
 
     def set(self, val):
-        # Sets locked value
+        '''
+        Sets locked value.
+        '''
         self.value = val
 
     def set_temp(self, val):
-        # Sets temp value
+        '''
+        Sets temp value(s).
+        '''
         if val not in self.temp and val != 0:
             self.temp.append(val)
         elif val == 0:
             self.temp = []
 
-
-
 # Other functions
 def redraw_window(screen, board, time):
+    '''
+    Calls other functions to draw pygame window.
+    '''
     screen.fill(WHITE)
     font = pygame.font.SysFont("comicsans", 40)
     small_font = pygame.font.SysFont("comicsans", 20)
@@ -249,6 +308,9 @@ def redraw_window(screen, board, time):
     screen.blit(esc_txt, (380, 580))
 
 def format_time(secs):
+    '''
+    Returns formatted time in H:M:S.
+    '''
     sec = secs%60
     minute = secs//60
     hour = minute//60
@@ -268,8 +330,12 @@ def draw_text(text, font, colour, screen, x, y):
     txt = font.render(text, True, colour)
     screen.blit(txt, (x, y))
 
-# Main menu
 def main_menu():
+    '''
+    Runs the main menu when called.
+
+    Displayed on the menu are: Easy, Medium, Hard, Instructions
+    '''
     run = True
     click = False
     pygame.display.set_caption("Sudoku Main Menu")
@@ -341,8 +407,10 @@ def main_menu():
         
         pygame.display.update()
 
-# Instructions page
 def instructions():
+    '''
+    Instructions page for sudoku game.
+    '''
     run = True
     pygame.display.set_caption("Sudoku Instructions")
     screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
@@ -379,8 +447,10 @@ def instructions():
         
         pygame.display.update()
 
-# Running the game
 def game(difficulty):
+    '''
+    Runs the game with a newly generated sudoku board with difficulty specified by integer input.
+    '''
     run = True
     key = None
     screen = pygame.display.set_mode((WIDTH, HEIGHT + 100))
