@@ -34,17 +34,23 @@ Run sudokuwithsolver to experience the full game.
 
 
 
-Screenshots of the game:
+Screenshots of the game:  
+
+
 Main Menu:  
 ![sudokumainmenu](https://user-images.githubusercontent.com/65714641/131245718-ea57a5b5-12d1-4dfd-9c0e-a8a8822b0105.png)
 
-Instructions page:
+
+Instructions page:  
 ![instructions](https://user-images.githubusercontent.com/65714641/131245743-36dbd7b3-c5c0-440e-b9c5-5a18d37d39e5.png)
 
-Easy, Medium and Hard modes:
-![sudokueasy](https://user-images.githubusercontent.com/65714641/131245752-fa955091-305c-454c-a2cd-5c0c6849ca93.png)
+
+Easy, Medium and Hard modes:  
+![sudokueasy](https://user-images.githubusercontent.com/65714641/131245752-fa955091-305c-454c-a2cd-5c0c6849ca93.png)  
+![sudokumedium](https://user-images.githubusercontent.com/65714641/131245909-16392f9c-64fd-45f0-8562-8a7934e04853.png)  
+![sudokuhard](https://user-images.githubusercontent.com/65714641/131245911-7c93a355-d97c-471e-aa84-595cbbbb787f.png)  
 
 
-Solving algorithm:
+Solving algorithm:  
 ![sudokusolve](https://user-images.githubusercontent.com/65714641/131245761-4db96910-7355-406f-a91b-68c06dcee3af.png)
 
