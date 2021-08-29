@@ -29,3 +29,8 @@ This file is the final sudoku game with more functionalities. It features a main
 GUI.  
   
 Run sudokuwithsolver to experience the full game.
+
+
+
+
+![sudokumainmenu](https://user-images.githubusercontent.com/65714641/131245718-ea57a5b5-12d1-4dfd-9c0e-a8a8822b0105.png)
