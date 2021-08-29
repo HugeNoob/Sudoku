@@ -35,7 +35,7 @@ Run sudokuwithsolver to experience the full game.
 
 
 Screenshots of the game:
-Main Menu:
+Main Menu:  
 ![sudokumainmenu](https://user-images.githubusercontent.com/65714641/131245718-ea57a5b5-12d1-4dfd-9c0e-a8a8822b0105.png)
 
 Instructions page:
@@ -43,8 +43,7 @@ Instructions page:
 
 Easy, Medium and Hard modes:
 ![sudokueasy](https://user-images.githubusercontent.com/65714641/131245752-fa955091-305c-454c-a2cd-5c0c6849ca93.png)
-![sudokumedium](https://user-images.githubusercontent.com/65714641/131245754-49fc1550-5169-4a6d-8f93-1d94c472d56d.png)
-![sudokuhard](https://user-images.githubusercontent.com/65714641/131245755-37ca2554-5ea7-4b63-bcd9-4b5dedb88459.png)
+
 
 Solving algorithm:
 ![sudokusolve](https://user-images.githubusercontent.com/65714641/131245761-4db96910-7355-406f-a91b-68c06dcee3af.png)
