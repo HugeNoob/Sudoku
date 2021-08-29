@@ -46,9 +46,13 @@ Instructions page:
 
 
 Easy, Medium and Hard modes:  
-![sudokueasy](https://user-images.githubusercontent.com/65714641/131245752-fa955091-305c-454c-a2cd-5c0c6849ca93.png)  
-![sudokumedium](https://user-images.githubusercontent.com/65714641/131245909-16392f9c-64fd-45f0-8562-8a7934e04853.png)  
-![sudokuhard](https://user-images.githubusercontent.com/65714641/131245911-7c93a355-d97c-471e-aa84-595cbbbb787f.png)  
+![sudokueasy](https://user-images.githubusercontent.com/65714641/131245752-fa955091-305c-454c-a2cd-5c0c6849ca93.png) (Easy)  
+
+
+![sudokumedium](https://user-images.githubusercontent.com/65714641/131245909-16392f9c-64fd-45f0-8562-8a7934e04853.png) (Medium)  
+
+
+![sudokuhard](https://user-images.githubusercontent.com/65714641/131245911-7c93a355-d97c-471e-aa84-595cbbbb787f.png) (Hard)  
 
 
 Solving algorithm:  
