@@ -1,7 +1,7 @@
 # Sudoku
 
 An Overview:  
-This sudoku game is my first attempt at a project outside of online courses. The goal was to make a simple sudoku game using the pygame module, which features basic 
+This sudoku game is my first attempt at a project outside of online courses. The goal was to make a simple sudoku game, using the pygame module, which features basic 
 functionalities like a solver and a board generator. The project revolves around the usage of recursion and a backtracking algorithm, with some dabbling in OOP.
 
 
