@@ -2,7 +2,7 @@
 
 An Overview:  
 This sudoku game is my first attempt at a project outside of online courses. The goal was to make a simple sudoku game, using the pygame module, featuring extra 
-functionalities like a solver and a board generator. The project revolves around the usage of recursion and a backtracking algorithm, with some dabbling in OOP.
+functionalities like a solver and a board generator. The project revolves around the usage of recursion and a backtracking DFS algorithm, with some dabbling in OOP.
 
   
 Run sudokuwithsolver.py to experience the full game.
